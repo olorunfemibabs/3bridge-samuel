@@ -84,6 +84,8 @@ export default function Toggle({ classId }) {
       setProgramAddress(res);
     }
 
+    console.log("status", currentStatus);
+
     setCurrentStatus(lectureData?.status);
   }, [programAddress, lectureData?.status]);
 
