@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
 import Pagination from "../../components/Pagination.js";
 import { paginate } from "../../../utils/paginate.js";
