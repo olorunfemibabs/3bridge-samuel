@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 
 import main from "../../../components/upload.mjs";
 import {
+  useContractRead,
   useContractWrite,
   usePrepareContractWrite,
   useWaitForTransaction,
@@ -16,6 +17,7 @@ import {
 import ChildABI from "../../../utils/childABI.json";
 
 import CardBReport from "../../ui-components/CardBReport";
+import { JsonRpcProvider, ethers } from "ethers";
 
 const Attendance = () => {
   const [modal, setModal] = useState(false);
@@ -32,6 +34,23 @@ const Attendance = () => {
     functionName: "createAttendance",
     args: [id, uri, topic],
   });
+  const [classsIdd, setClasssIdd] = useState([]);
+
+  const getAttendance = async () => {
+    try {
+      const provider = new JsonRpcProvider(process.env.NEXT_PUBLIC_ALCHEMY_KEY);
+      const attendanceContract = new ethers.Contract(
+        programAddress,
+        ChildABI,
+        provider
+      );
+      const lectureIds = await attendanceContract.getLectureIds();
+      console.log("AAAAAA: ", lectureIds);
+      setClasssIdd(lectureIds);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const {
     data: createAttendanceData,
@@ -47,8 +66,17 @@ const Attendance = () => {
   } = useWaitForTransaction({
     hash: createAttendanceData?.hash,
 
-    onSuccess: () => {
+    onSuccess: async () => {
       toast.success("Attendance created successfully");
+      // const { data: lectureData, isLoading: lectureDataIsLoading } =
+      //   useContractRead({
+      //     address: programAddress,
+      //     abi: ChildABI,
+      //     functionName: "getLectureData",
+      //     args: [id],
+      //   });
+
+      getAttendance();
     },
 
     onError(error) {
@@ -94,6 +122,7 @@ const Attendance = () => {
       let res = localStorage.getItem("programAddress");
       setProgramAddress(res);
     }
+    getAttendance();
   }, [programAddress]);
 
   return (
@@ -111,7 +140,7 @@ const Attendance = () => {
       />
 
       <Section>
-        <CardBReport />
+        <CardBReport classsIdd={classsIdd} />
       </Section>
 
       <Modal

@@ -4,7 +4,7 @@ import { useAccount, useContractRead } from "wagmi";
 import ChildABI from "../../../utils/childABI.json";
 import CardDetailsId from "../CardDetailsId";
 
-const CardBReport = () => {
+const CardBReport = ({ classsIdd }) => {
   const [modal, setModal] = useState(false);
   const [classIds, setClassIds] = useState([]);
   const [visible, setVisible] = useState(6);
@@ -24,7 +24,11 @@ const CardBReport = () => {
     }
 
     setClassIds(classIdsData);
+    console.log(classIdsData);
   }, [classIdsData]);
+
+  // name
+  // id
 
   const showMoreItems = () => {
     setVisible((prevValue) => prevValue + 6);
@@ -33,17 +37,14 @@ const CardBReport = () => {
   return (
     <div>
       <div className=" grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-8 ml-12">
-        {classIds &&
-          classIds
-            .reverse()
-            ?.slice(0, visible)
-            .map((class_taught, i) => {
-              return (
-                <div key={i}>
-                  <CardDetailsId classId={class_taught} />;
-                </div>
-              );
-            })}
+        {classsIdd &&
+          classsIdd?.slice(0, visible).map((class_taught, i) => {
+            return (
+              <div key={i}>
+                <CardDetailsId classId={class_taught} />;
+              </div>
+            );
+          })}
       </div>
       {classIds?.length > 6 && (
         <div className=" flex flex-row items-center justify-center pt-4 mt-4	">
