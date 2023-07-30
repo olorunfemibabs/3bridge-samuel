@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import styles from "./styles.module.css";
 import Card from "../Card";
 import { SlCalender } from "react-icons/sl";
 import { useContractRead } from "wagmi";
@@ -11,6 +12,8 @@ const StudCard = ({ classId }) => {
   const [subHeading, setSubHeading] = useState("");
   const [mentorName, setMentorName] = useState("");
   const [mentorAddress, setMentorAddress] = useState("");
+  const [cardDate, setCardDate] = useState("");
+  const [students, setStudents] = useState("");
   const [showId, setShowId] = useState("");
   const [showUri, setShowUri] = useState("");
   const [detail, setDetail] = useState({});
