@@ -56,7 +56,7 @@ const Programmes = () => {
     address: FacoryAddr(),
     abi: FACABI,
     functionName: "createorganisation",
-    args: [schoolName, programName, "gsjdhsuua"],
+    args: [schoolName, programName, "https://www.web3bridge.com"],
     onSuccess(data) {
       console.log("Success", data);
     },
